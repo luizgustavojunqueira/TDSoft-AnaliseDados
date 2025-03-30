@@ -51,10 +51,10 @@ mix test
 Caso queira executar os scripts várias vezes para diversos arquivos de teste, utilize:
 
 ```bash
-bash run.sh <dir>
+bash run.sh test_files
 ```
 
-Onde <dir> é um diretório contendo os arquivos json para testar.
+Onde <test_files> um diretório contendo os arquivos json para testar.
 
 ## Observações
 
