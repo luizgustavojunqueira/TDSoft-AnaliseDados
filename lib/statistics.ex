@@ -23,16 +23,16 @@ defmodule Statistics do
     end
   end
 
-  def max([]), do: 0
+  def max([]), do: nil
   def max(values), do: Enum.max(values)
 
-  def min([]), do: 0
+  def min([]), do: nil
   def min(values), do: Enum.min(values)
 
-  def average([]), do: 0.0
+  def average([]), do: nil
   def average(values), do: Enum.sum(values) / length(values)
 
-  def median([]), do: 0.0
+  def median([]), do: nil
 
   def median(values) do
     sorted_values = Enum.sort(values)
@@ -47,7 +47,7 @@ defmodule Statistics do
     end
   end
 
-  def standard_deviation([]), do: 0.0
+  def standard_deviation([]), do: nil
 
   def standard_deviation(values) do
     mean = average(values)
@@ -65,5 +65,36 @@ defmodule Statistics do
     |> Enum.map(&String.downcase/1)
     |> Enum.frequencies()
     |> Enum.sort_by(fn {location, freq} -> {-freq, location} end)
+  end
+
+  def generate_metrics(values) do
+    followers = Enum.map(values, fn user -> user["followers_count"] end)
+    followings = Enum.map(values, fn user -> user["following_count"] end)
+
+    account_ages =
+      values
+      |> Enum.map(fn user ->
+        case Statistics.account_age_in_days(user["created_at"]) do
+          {:ok, age} ->
+            age
+
+          {:error, reason} ->
+            IO.puts("Error calculating account age: #{inspect(reason)}")
+            nil
+        end
+      end)
+      |> Enum.filter(fn age -> is_number(age) end)
+
+    [
+      {"Followers", Statistics.min(followers), Statistics.max(followers),
+       Statistics.average(followers), Statistics.median(followers),
+       Statistics.standard_deviation(followers)},
+      {"Following", Statistics.min(followings), Statistics.max(followings),
+       Statistics.average(followings), Statistics.median(followings),
+       Statistics.standard_deviation(followings)},
+      {"Account Age", Statistics.min(account_ages), Statistics.max(account_ages),
+       Statistics.average(account_ages), Statistics.median(account_ages),
+       Statistics.standard_deviation(account_ages)}
+    ]
   end
 end
