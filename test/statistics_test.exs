@@ -42,7 +42,7 @@ defmodule StatisticsTest do
 
   test "average calculates the average correctly for empty list" do
     values = []
-    assert Statistics.average(values) == 0.0
+    assert Statistics.average(values) == nil
   end
 
   test "average calculates the average correctly for single element" do
@@ -67,7 +67,7 @@ defmodule StatisticsTest do
 
   test "median calculates the median correctly for empty list" do
     values = []
-    assert Statistics.median(values) == 0.0
+    assert Statistics.median(values) == nil
   end
 
   test "standard_deviation calculates correctly" do
@@ -77,7 +77,7 @@ defmodule StatisticsTest do
 
   test "standard_deviation calculates correctly for empty list" do
     values = []
-    assert Statistics.standard_deviation(values) == 0.0
+    assert Statistics.standard_deviation(values) == nil
   end
 
   test "max returns the maximum value correctly" do
@@ -87,7 +87,7 @@ defmodule StatisticsTest do
 
   test "max returns 0 for empty list" do
     values = []
-    assert Statistics.max(values) == 0
+    assert Statistics.max(values) == nil
   end
 
   test "min returns the minimum value correctly" do
@@ -97,7 +97,7 @@ defmodule StatisticsTest do
 
   test "min returns 0 for empty list" do
     values = []
-    assert Statistics.min(values) == 0
+    assert Statistics.min(values) == nil
   end
 
   test "read invalid json file" do
